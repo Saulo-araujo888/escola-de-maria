@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Escola de Maria | Mariologia</title>
+  <!-- Font Awesome 6 para ícones de redes sociais e menu -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffdab9 40%, #fff0f5 70%, #ffffff 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      color: #4a2c3d;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Container centralizado e responsivo */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    /* ===== LOGO ===== */
+    .logo-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 25px 15px 15px;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .logo-marca {
+      width: 90px;
+      height: 90px;
+      background: #fff6f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(233, 144, 162, 0.3);
+      border: 3px solid #fbc4cb;
+      background-image: radial-gradient(circle at 30% 30%, #ffe4e9, #fdd9c0);
+      color: #b3446c;
+      font-size: 3.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-marca i {
+      color: #c94b6e;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+
+    .logo-area h1 {
+      font-size: 2.6rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #773d4e;
+      text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.7);
+      background: rgba(255,250,245,0.6);
+      padding: 5px 25px;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== CABEÇALHO / MENU HAMBURGUER CASCATA ===== */
+    .cabecalho-area {
+      margin: 15px 0 25px;
+    }
+
+    .menu-principal {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    /* Item de menu principal (botão hambúrguer-like) */
+    .menu-item {
+      position: relative;
+    }
+
+    .menu-btn {
+      background: #fff5f0;
+      border: 2px solid #f7cac9;
+      color: #6d3b4b;
+      padding: 12px 22px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 35px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      background: rgba(255, 245, 240, 0.8);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(229, 148, 140, 0.2);
+      white-space: nowrap;
+      letter-spacing: 0.4px;
+    }
+
+    .menu-btn i {
+      font-size: 1.2rem;
+      color: #c9637c;
+      transition: transform 0.3s;
+    }
+
+    .menu-btn:hover {
+      background: #ffe9df;
+      border-color: #e5989b;
+      box-shadow: 0 8px 18px rgba(210, 120, 120, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* Dropdown cascata */
+    .submenu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) scaleY(0);
+      transform-origin: top center;
+      background: rgba(255, 248, 245, 0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 10px 5px;
+      margin-top: 10px;
+      min-width: 220px;
+      box-shadow: 0 20px 30px rgba(180, 110, 110, 0.25);
+      border: 1px solid #fad2d6;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      list-style: none;
+    }
+
+    .submenu li {
+      list-style: none;
+    }
+
+    .submenu a {
+      display: block;
+      padding: 10px 20px;
+      color: #4b2e3a;
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    .submenu a:hover {
+      background: #fce4ec;
+      color: #a33b56;
+      padding-left: 25px;
+      font-weight: 600;
+    }
+
+    /* Classe ativa para mostrar submenu com efeito cascata */
+    .submenu.ativo {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) scaleY(1);
+    }
+
+    /* Triângulo decorativo */
+    .submenu::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid rgba(255, 245, 240, 0.98);
+    }
+
+    /* ===== ÁREA POSTAGEM (CARDS) ===== */
+    .postagem-area {
+      margin: 30px 0 40px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 28px;
+      margin-top: 15px;
+    }
+
+    .card {
+      background: rgba(255, 250, 250, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 20px 18px 22px;
+      box-shadow: 0 18px 30px rgba(237, 164, 147, 0.25);
+      border: 1px solid #ffe2d0;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      color: #4d2e3b;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 38px rgba(214, 123, 123, 0.3);
+      background: rgba(255, 245, 240, 0.95);
+    }
+
+    .card-imagem {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(145deg, #fdd5cd, #fde2da);
+      border-radius: 20px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #b55b6c;
+      font-size: 2.5rem;
+      border: 2px dashed #eebbc3;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-imagem i {
+      opacity: 0.7;
+      font-size: 3rem;
+    }
+
+    /* Placeholder visual para imagem */
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #6b3242;
+      font-weight: 650;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #5c3b47;
+      margin-bottom: 15px;
+      flex: 1;
+    }
+
+    .card .data {
+      font-size: 0.8rem;
+      color: #b3677a;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 5px;
+    }
+
+    /* ===== RODAPÉ ===== */
+    .rodape-area {
+      margin-top: auto;
+      padding: 25px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-top: 2px solid #fad6dc;
+      background: rgba(255, 235, 225, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 50px 50px 0 0;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 35px;
+      margin-bottom: 8px;
+    }
+
+    .social-icons a {
+      color: #9b5b6d;
+      font-size: 2.2rem;
+      transition: all 0.25s ease;
+      background: #fff2f0;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 6px 14px rgba(198, 120, 120, 0.25);
+      text-decoration: none;
+    }
+
+    .social-icons a:hover {
+      color: #ffffff;
+      background: #d9647c;
+      transform: scale(1.1) rotate(3deg);
+      box-shadow: 0 12px 22px rgba(180, 70, 100, 0.4);
+    }
+
+    .rodape-texto {
+      color: #7a4b58;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    /* Responsivo fino */
+    @media (max-width: 700px) {
+      .logo-area h1 {
+        font-size: 2rem;
+      }
+      .menu-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+      .submenu {
+        min-width: 190px;
+        left: 50%;
+        transform: translateX(-50%) scaleY(0);
+      }
+      .submenu.ativo {
+        transform: translateX(-50%) scaleY(1);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-principal {
+        flex-direction: column;
+        align-items: center;
+      }
+      .submenu {
+        left: 50%;
+        transform: translateX(-50%) scaleY(0);
+        position: absolute;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ÁREA LOGO -->
+    <div class="logo-area">
+      <div class="logo-marca">
+        <img src="imagens/Logomarca_oficial_do_Site_-removebg-preview.png" width="80px" height="80px" alt="logomarca">
+      </div>
+      <h1>Escola de Maria</h1>
+    </div>
+
+    <!-- ÁREA CABEÇALHO COM MENUS HAMBURGUER CASCATA -->
+    <div class="cabecalho-area">
+      <div class="menu-principal" id="menuPrincipal">
+        <!-- Menu 1: Página inicial (sem submenu, mas mantendo estilo) -->
+        <div class="menu-item" data-menu="inicial">
+          <button class="menu-btn">
+            <i class="fas fa-home"></i> Página inicial
+          </button>
+          <!-- Sem submenu, apenas link direto ou página inicial -->
+        </div>
+
+        <!-- Menu 2: Maria na Bíblia -->
+        <div class="menu-item" data-menu="biblia">
+          <button class="menu-btn">
+            <i class="fas fa-book-bible"></i> Maria na Bíblia <i class="fas fa-chevron-down"></i>
+          </button>
+          <ul class="submenu" id="submenu-biblia">
+            <li><a href="evangelho-de-mateus.html"> Mariologia de Mateus </a></li>
+            <li><a href="evangelho-de-marcos.html"> Mariologia de Marcos </a></li>
+            <li><a href="evangelho-de-lucas.html"> Mariologia de Lucas </a></li>
+            <li><a href="evangelho-de-joao.html"> Mariologia de João </a></li>
+            <li><a href="cartas-de-paulo.html"> Mariologia de Paulo </a></li>
+             <li><a href="livro-de-apocalipse.html"> Mariologia de Paulo </a></li>
+          </ul>
+        </div>
+
+        <!-- Menu 3: Maria na Igreja -->
+        <div class="menu-item" data-menu="igreja">
+          <button class="menu-btn">
+            <i class="fas fa-church"></i> Maria na Igreja <i class="fas fa-chevron-down"></i>
+          </button>
+          <ul class="submenu" id="submenu-igreja">
+            <li><a href="#">Dogmas Marianos</a></li>
+            <li><a href="#">Concílios</a></li>
+            <li><a href="#">Padres da Igreja</a></li>
+            <li><a href="#">Lumen Gentium VIII</a></li>
+          </ul>
+        </div>
+
+        <!-- Menu 4: Maria na Liturgia -->
+        <div class="menu-item" data-menu="liturgia">
+          <button class="menu-btn">
+            <i class="fas fa-pray"></i> Maria na Liturgia <i class="fas fa-chevron-down"></i>
+          </button>
+          <ul class="submenu" id="submenu-liturgia">
+            <li><a href="#">Solenidades</a></li>
+            <li><a href="#">Memórias</a></li>
+            <li><a href="#">Ofício da Imaculada</a></li>
+            <li><a href="#">Angelus</a></li>
+          </ul>
+        </div>
+
+        <!-- Menu 5: Maria na Devoção popular -->
+        <div class="menu-item" data-menu="devocao">
+          <button class="menu-btn">
+            <i class="fas fa-heart"></i> Maria na Devoção popular <i class="fas fa-chevron-down"></i>
+          </button>
+          <ul class="submenu" id="submenu-devocao">
+            <li><a href="#">Nossa Senhora Aparecida</a></li>
+            <li><a href="#">Nossa Senhora de Fátima</a></li>
+            <li><a href="#">Nossa Senhora de Lourdes</a></li>
+            <li><a href="#">Nossa Senhora do Carmo</a></li>
+          </ul>
+        </div>
+
+        <!-- Menu 6: Orações marianas -->
+        <div class="menu-item" data-menu="oracoes">
+          <button class="menu-btn">
+            <i class="fas fa-hands-praying"></i> Orações marianas <i class="fas fa-chevron-down"></i>
+          </button>
+          <ul class="submenu" id="submenu-oracoes">
+            <li><a href="#">Ave Maria</a></li>
+            <li><a href="#">Salve Rainha</a></li>
+            <li><a href="#">Santo Rosário</a></li>
+            <li><a href="#">Ladainha Lauretana</a></li>
+            <li><a href="#">Consagração</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÁREA POSTAGEM: 4 CARDS PARA NOTÍCIAS DE MARIOLOGIA -->
+    <div class="postagem-area">
+      <h2 style="font-weight: 500; color: #773d4e; margin-bottom: 5px; display: flex; align-items: center; gap: 8px;">
+        <i class="fas fa-newspaper" style="color: #d47b8c;"></i> Notícias do Universo Mariológico
+      </h2>
+      <div class="cards-grid">
+        <!-- Card 1 -->
+        <div class="card">
+          <div class="card-imagem">
+            <i class="fas fa-image" style="color: #c27b8c;"></i>
+            <!-- Espaço para imagem: substituir por <img> depois -->
+          </div>
+          <h3>Simpósio Internacional de Mariologia 2026</h3>
+          <p>Especialistas discutem o papel de Maria na teologia contemporânea. Inscrições abertas para o evento em Roma.</p>
+          <div class="data"><i class="far fa-calendar-alt"></i> 15 de maio de 2026</div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <div class="card-imagem">
+            <i class="fas fa-image" style="color: #c27b8c;"></i>
+          </div>
+          <h3>Nova Publicação: "Maria e os Padres do Deserto"</h3>
+          <p>Livro revela influência mariana nos primeiros monges. Uma abordagem histórica e espiritual inédita.</p>
+          <div class="data"><i class="far fa-calendar-alt"></i> 02 de maio de 2026</div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <div class="card-imagem">
+            <i class="fas fa-image" style="color: #c27b8c;"></i>
+          </div>
+          <h3>Congresso Mariológico debate Aparições</h3>
+          <p>Teólogos avaliam critérios para discernimento das aparições marianas no século XXI. Participe online.</p>
+          <div class="data"><i class="far fa-calendar-alt"></i> 28 de abril de 2026</div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+          <div class="card-imagem">
+            <i class="fas fa-image" style="color: #c27b8c;"></i>
+          </div>
+          <h3>Curso livre: Mariologia Bíblica</h3>
+          <p>Faculdade oferece curso de extensão sobre as bases bíblicas da mariologia. Aulas gravadas disponíveis.</p>
+          <div class="data"><i class="far fa-calendar-alt"></i> 10 de abril de 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ COM ÍCONES YOUTUBE E INSTAGRAM -->
+  <footer class="rodape-area">
+    <div class="social-icons">
+      <a href="#" aria-label="YouTube" title="Canal no YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="#" aria-label="Instagram" title="Perfil no Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+    <div class="rodape-texto">
+      <span>© 2026 Escola de Maria · Mariologia viva</span>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // Efeito cascata nos menus hambúrguer: clique mostra/esconde submenu
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      // Função para fechar todos os submenus abertos
+      function fecharTodosSubmenus(excecao = null) {
+        const submenus = document.querySelectorAll('.submenu');
+        submenus.forEach(sub => {
+          if (sub !== excecao) {
+            sub.classList.remove('ativo');
+          }
+        });
+      }
+
+      // Adiciona evento de clique em cada botão de menu
+      menuItems.forEach(item => {
+        const btn = item.querySelector('.menu-btn');
+        const submenu = item.querySelector('.submenu');
+        
+        if (!btn) return;
+        
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          
+          // Se não tem submenu (ex: Página inicial), apenas fecha os outros e não faz toggle
+          if (!submenu) {
+            fecharTodosSubmenus();
+            // Poderia redirecionar ou manter como link principal, aqui apenas fecha outros.
+            return;
+          }
+          
+          // Verifica se o submenu atual já está ativo
+          const estaAtivo = submenu.classList.contains('ativo');
+          
+          // Fecha todos os submenus
+          fecharTodosSubmenus();
+          
+          // Se não estava ativo, abre; se estava ativo, permanece fechado (toggle)
+          if (!estaAtivo) {
+            submenu.classList.add('ativo');
+          }
+        });
+      });
+
+      // Fecha os submenus ao clicar fora deles
+      document.addEventListener('click', function(event) {
+        // Verifica se o clique foi fora de qualquer menu-item
+        if (!event.target.closest('.menu-item')) {
+          fecharTodosSubmenus();
+        }
+      });
+
+      // Fecha submenu ao clicar em um link dentro dele (opcional, mas melhora usabilidade)
+      const submenuLinks = document.querySelectorAll('.submenu a');
+      submenuLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Permite a ação do link (não previne padrão) mas fecha o submenu cascata
+          const submenuPai = this.closest('.submenu');
+          if (submenuPai) {
+            setTimeout(() => {
+              submenuPai.classList.remove('ativo');
+            }, 100); // pequeno delay para garantir a navegação visual
+          }
+        });
+      });
+
+      // Para o menu "Página inicial" (sem submenu), poderia ser tratado como link:
+      const btnInicial = document.querySelector('.menu-item[data-menu="inicial"] .menu-btn');
+      if (btnInicial) {
+        btnInicial.addEventListener('click', function(e) {
+          fecharTodosSubmenus();
+          // Comportamento de página inicial: recarregar ou scroll top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
